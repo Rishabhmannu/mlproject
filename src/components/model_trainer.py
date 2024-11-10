@@ -17,7 +17,7 @@ from xgboost import XGBRegressor
 
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object, evaluate_model
+from src.utils import save_object, evaluate_models
 
 @dataclass
 class ModelTrainerConfig:
@@ -90,12 +90,16 @@ class ModelTrainer:
         }
       }
       
-      model_report:dict=evaluate_model(X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test,models=models, param=params)
+      model_report:dict=evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test,models=models, param=params)
       
       
       # Get the best model score and name
-      best_model_name=max(model_report,key=lambda x:model_report[x]['Test R2 Score'])
-      best_model_score=model_report[best_model_name]['Test R2 Score']
+      best_model_name = max(model_report, key=lambda x: model_report[x])
+      best_model_score = model_report[best_model_name]
+
+      
+      # best_model_name=max(model_report,key=lambda x:model_report[x]['Test R2 Score'])
+      # best_model_score=model_report[best_model_name]['Test R2 Score']
       
       if(best_model_score<0.6):
         raise CustomException("No best model found")
