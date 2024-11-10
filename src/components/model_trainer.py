@@ -48,7 +48,49 @@ class ModelTrainer:
         "XGBoost Regressor" : XGBRegressor()
       }
       
-      model_report:dict=evaluate_model(X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test,models=models)
+      params={
+        "Decision Tree" : {
+          'criterion' : ['squared_error','friedman_mse','absolute_error','poisson'],
+          # 'splitter' : ['best','random'],
+          # 'max_features' : ['auto','sqrt','log2'],
+        },
+        "Random Forest" : {
+            # criterion : ['squared_error','friedman_mse','absolute_error','poisson'],
+            # 'max_features' : ['auto','sqrt','log2'],
+            'n_estimators' : [8,16,32,64,128,256]
+        },
+        "Gradient Boosting" : {
+          #'loss' : ['squared_error','absolute_error','huber','quantile'],
+          'learning_rate' : [0.001,0.01,0.1,0.2,0.3,0.5],
+          'subsample' : [0.6,0.7,0.75,0.8,0.85,0.9],
+          # 'criterion' : ['friedman_mse','mse','mae'],
+          # 'max_features' : ['auto','sqrt','log2'],
+          'n_estimators': [8, 16, 32, 64, 128, 256]
+          
+        },
+        "Linear Regression" : {},
+        "K-Neighbours Regressor" : {
+          'n_neighbors' : [2,5,6,7,8,9,11],
+          # 'weights' : ['uniform','distance'],
+          # 'algorithm' : ['auto','ball_tree','kd_tree','brute'],
+        },
+        "XGBoost Regressor" : {
+          'learning_rate' : [0.001,0.01,0.1,0.2,0.3,0.5],
+          'n_estimators' : [8,16,32,64,128,256],
+        },
+        "Cat Boost Regressor" : {
+          'depth' : [5,6,8,10],
+          'iterations' : [30,50,100],
+          
+        },
+        "Ada Boost Regressor" : {
+          'n_estimators' : [8,16,32,64,128,256],
+          'learning_rate' : [0.001,0.01,0.1,0.2,0.3,0.5],
+          # 'loss' : ['linear','square','exponential'],
+        }
+      }
+      
+      model_report:dict=evaluate_model(X_train=X_train, y_train=y_train, X_test=X_test,y_test=y_test,models=models, param=params)
       
       
       # Get the best model score and name
