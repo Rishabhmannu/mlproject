@@ -12,7 +12,7 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object
-@dataclass
+@dataclass 
 class DataTransformationConfig:
   preprocessor_obj_path = os.path.join('artifacts', 'preprocessor.pkl')
   
@@ -57,6 +57,8 @@ class DataTransformation:
         ])
       
       return preprocessor
+    
+    
     except Exception as e:
       raise CustomException(e,sys)
 

@@ -17,5 +17,5 @@ logging.basicConfig(
 )
 
 # test module
-# if __name__=="__main__":
-#     logging.info("Logging is working fine")
+if __name__=="__main__":
+    logging.info("Logging is working fine")
